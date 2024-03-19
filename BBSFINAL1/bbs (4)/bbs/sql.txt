@@ -1,0 +1,22 @@
+CREATE USER 'bbsdbuser'@'localhost' IDENTIFIED BY 'bbsdbuser';
+
+CREATE DATABASE bbs_user_db;
+GRANT ALL PRIVILEGES ON `bbs_user_db`.* TO 'bbsdbuser'@'localhost' WITH GRANT OPTION;
+
+
+CREATE DATABASE bbs_bus_db;
+GRANT ALL PRIVILEGES ON `bbs_bus_db`.* TO 'bbsdbuser'@'localhost' WITH GRANT OPTION;
+
+CREATE DATABASE bbs_booking_db;
+GRANT ALL PRIVILEGES ON `bbs_booking_db`.* TO 'bbsdbuser'@'localhost' WITH GRANT OPTION;
+
+CREATE DATABASE bbs_payment_db;
+GRANT ALL PRIVILEGES ON `bbs_payment_db`.* TO 'bbsdbuser'@'localhost' WITH GRANT OPTION;
+
+CREATE DATABASE bbs_feedback_db;
+GRANT ALL PRIVILEGES ON `bbs_feedback_db`.* TO 'bbsdbuser'@'localhost' WITH GRANT OPTION;
+
+use bbs_user_db;
+INSERT INTO role(id,name) VALUES
+(1,"USER"),
+(2,"ADMIN");

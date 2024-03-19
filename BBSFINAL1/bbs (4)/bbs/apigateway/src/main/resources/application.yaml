@@ -1,0 +1,75 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: APIGATEWAY
+  main:
+    allow-bean-definition-overriding: true
+    jwt:
+      secret-key: mySecretKey
+      expiration-time: 86400000 # 1 day in milliseconds
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bbs_user_db
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: false
+    open-in-view: false
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
+        - id: BUS-SERVICE
+          uri: lb://BUS-SERVICE
+          predicates:
+            - Path=/api/busservice/**
+        - id: BOOKING-SERVICE
+          uri: lb://BOOKING-SERVICE
+          predicates:
+            - Path=/api/bookingservice/**
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/paymentservice/**
+        - id: FEEDBACK-SERVICE
+          uri: lb://FEEDBACK-SERVICE
+          predicates:
+            - Path=/api/feedbackservice/**
+        - id: SEARCH-SERVICE
+          uri: lb://SEARCH-SERVICE
+          predicates:
+            - Path=/api/searchservice/**
+logging:
+  pattern:
+    console: "%green([%d{dd-MM-yyyy HH:mm:ss}]) %magenta([%thread]) %highlight([%-5level]) [%logger -> %M.%line] => %highlight(%msg%n)"
+  level:
+    com.apigateway: DEBUG
+    root: INFO
+
+springbootwebfluxjjwt:
+  jjwt:
+    secret: ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength
+    expiration: 28800
+
+springdoc-swagger-ui:
+  path: /swagger-ui.html
+springdoc:
+  api-docs:
+    path: /api-docs
